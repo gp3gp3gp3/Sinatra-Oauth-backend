@@ -20,9 +20,14 @@ GEM
     http-form_data (1.0.1)
     http_parser.rb (0.6.0)
     json (1.8.3)
+    koala (2.4.0)
+      addressable
+      faraday
+      multi_json (>= 1.3.0)
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
     method_source (0.8.2)
+    multi_json (1.12.1)
     multipart-post (2.0.0)
     naught (1.1.0)
     pry (0.10.4)
@@ -61,6 +66,7 @@ PLATFORMS
 
 DEPENDENCIES
   json
+  koala (~> 2.2)
   pry
   sinatra
   twitter

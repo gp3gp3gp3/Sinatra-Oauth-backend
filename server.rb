@@ -2,19 +2,60 @@ require 'sinatra'
 require 'twitter'
 require 'pry'
 require 'json'
+require 'koala'
 
-TWITTER_USERNAMES = [
-  'VancityReynolds',
-  'DAVID_LYNCH',
-  'ConanOBrien',
-  'prattprattpratt',
-  'BillGates',
-  'StephenAtHome',
-  'elonmusk',
-  'rickygervais',
-  'BarackObama',
-  'kanyewest'
+CELEBRITIES = [
+  {
+    twitter: 'VancityReynolds',
+    facebook: 'VancityReynolds'
+  },
+  {
+    twitter: 'DAVID_LYNCH',
+    facebook: 'davidlynchofficial'
+  },
+  {
+    twitter: 'ConanOBrien',
+    facebook: 'teamcoco'
+  },
+  {
+    twitter: 'prattprattpratt',
+    facebook: 'PrattPrattPratt'
+  },
+  {
+    twitter: 'BillGates',
+    facebook: 'BillGates'
+  },
+  {
+    twitter: 'StephenAtHome',
+    facebook: 105550416146299
+  },
+  {
+    twitter: 'elonmusk',
+    facebook: 108250442531979
+  },
+  {
+    twitter: 'rickygervais',
+    facebook: 'rickygervais'
+  },
+  {
+    twitter: 'BarackObama',
+    facebook: 'barackobama'
+  },
+  {
+    twitter: 'kanyewest',
+    facebook: 107777555911981
+  }
 ]
+
+def facebook_graph
+  Koala::Facebook::API.new(ENV['FACEBOOK_ACCESS_TOKEN'])
+end
+
+def get_facebook_user_likes(user_name)
+  graph = facebook_graph
+  facebook_hash = graph.get_object(user_name)
+  facebook_hash['likes']
+end
 
 def twitter_client
   config = {
@@ -36,11 +77,11 @@ def get_twitter_user(user_name)
 end
 
 get '/' do
-  stream_hash = {}
-  twitter_users = TWITTER_USERNAMES.map do |user_name|
-    get_twitter_user(user_name)
+  response = CELEBRITIES.map do |celebrity|
+    res_hash = get_twitter_user(celebrity[:twitter])
+    res_hash['fb_likes'] = get_facebook_user_likes(celebrity[:facebook])
+    res_hash
   end
-  stream_hash['twitter'] = twitter_users
   content_type :json
-  stream_hash.to_json
+  response.to_json
 end
