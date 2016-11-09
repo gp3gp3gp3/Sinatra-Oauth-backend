@@ -29,6 +29,7 @@ def get_twitter_user(user_name)
   client = twitter_client
   twitter_obj = client.user(user_name)
   user_hash['user_name'] = twitter_obj.screen_name
+  user_hash['full_name'] = twitter_obj.name
   user_hash['followers_count'] = twitter_obj.followers_count
   user_hash['friends_count'] = twitter_obj.friends_count
   user_hash
