@@ -57,9 +57,8 @@ def facebook_graph
 end
 
 def get_facebook_user_likes(user_name)
-  graph = facebook_graph
-  facebook_hash = graph.get_object(user_name)
-  facebook_hash['likes']
+  facebook_hash = facebook_graph.api("#{user_name}?fields=fan_count")
+  facebook_hash['fan_count']
 end
 
 def twitter_client
@@ -86,7 +85,7 @@ get '/' do
   content_type :json
   response = CELEBRITIES.map do |celebrity|
     res_hash = get_twitter_user(celebrity[:twitter])
-    # res_hash['fb_likes'] = get_facebook_user_likes(celebrity[:facebook])
+    res_hash['fb_likes'] = get_facebook_user_likes(celebrity[:facebook])
     res_hash
   end
   response.to_json
