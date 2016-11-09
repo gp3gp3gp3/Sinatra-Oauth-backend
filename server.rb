@@ -73,6 +73,7 @@ def get_twitter_user(user_name)
   user_hash['full_name'] = twitter_obj.name
   user_hash['followers_count'] = twitter_obj.followers_count
   user_hash['friends_count'] = twitter_obj.friends_count
+  user_hash['profile_image_url'] = twitter_obj.profile_image_url_https(:original).to_s
   user_hash
 end
 
