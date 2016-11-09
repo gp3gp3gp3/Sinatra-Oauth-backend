@@ -3,6 +3,11 @@ require 'twitter'
 require 'pry'
 require 'json'
 require 'koala'
+require 'sinatra/cross_origin'
+
+configure do
+  enable :cross_origin
+end
 
 CELEBRITIES = [
   {
@@ -78,11 +83,11 @@ def get_twitter_user(user_name)
 end
 
 get '/' do
+  content_type :json
   response = CELEBRITIES.map do |celebrity|
     res_hash = get_twitter_user(celebrity[:twitter])
-    res_hash['fb_likes'] = get_facebook_user_likes(celebrity[:facebook])
+    # res_hash['fb_likes'] = get_facebook_user_likes(celebrity[:facebook])
     res_hash
   end
-  content_type :json
   response.to_json
 end
