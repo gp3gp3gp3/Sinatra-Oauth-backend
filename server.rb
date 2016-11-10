@@ -4,6 +4,8 @@ require 'pry'
 require 'json'
 require 'koala'
 require 'sinatra/cross_origin'
+require 'net/http'
+require 'uri'
 
 configure do
   enable :cross_origin
@@ -89,4 +91,16 @@ get '/' do
     res_hash
   end
   response.to_json
+end
+
+get '/instagram' do
+  uri = URI.parse("https://api.instagram.com/oauth/access_token")
+  response = Net::HTTP.post_form(uri, {
+    "client_id" => "f98db0ad5d2648f095525ea0986f4d1a",
+    "client_secret" => ENV["INSTAGRAM_CLIENT_SECRET"],
+    "grant_type" => "authorization_code",
+    "redirect_uri" => "http://localhost:3001",
+    "code" => params["code"]
+  })
+  response.body
 end
