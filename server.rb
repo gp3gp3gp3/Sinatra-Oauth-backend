@@ -99,7 +99,7 @@ get '/instagram' do
     "client_id" => "f98db0ad5d2648f095525ea0986f4d1a",
     "client_secret" => ENV["INSTAGRAM_CLIENT_SECRET"],
     "grant_type" => "authorization_code",
-    "redirect_uri" => "http://localhost:3001",
+    "redirect_uri" => "https://gp3gp3gp3.github.io/instagram-clone/", # set to var depending on local enviornment
     "code" => params["code"]
   })
   response.body
