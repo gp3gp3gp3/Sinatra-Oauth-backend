@@ -73,8 +73,7 @@ end
 
 def get_twitter_user(user_name)
   user_hash = {}
-  client = twitter_client
-  twitter_obj = client.user(user_name)
+  twitter_obj = twitter_client.user(user_name)
   user_hash['user_name'] = twitter_obj.screen_name
   user_hash['full_name'] = twitter_obj.name
   user_hash['followers_count'] = twitter_obj.followers_count
@@ -99,7 +98,7 @@ get '/instagram' do
     "client_id" => "f98db0ad5d2648f095525ea0986f4d1a",
     "client_secret" => ENV["INSTAGRAM_CLIENT_SECRET"],
     "grant_type" => "authorization_code",
-    "redirect_uri" => "https://gp3gp3gp3.github.io/instagram-clone/", # set to var depending on local enviornment
+    "redirect_uri" => "https://gp3gp3gp3.github.io/instagram-clone/", # set to localhost:3000 || your port when developing locally
     "code" => params["code"]
   })
   response.body
